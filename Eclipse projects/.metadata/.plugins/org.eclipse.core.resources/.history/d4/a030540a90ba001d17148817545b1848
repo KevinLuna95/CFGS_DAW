@@ -1,0 +1,74 @@
+package es.ifp.programacion.funciones;
+
+import java.util.Scanner;
+
+public class ProgramaPrincipal {
+/**
+ * Se realizará el siguiente ejercicio que corresponde a la UF2 de Programación.
+ * Crea un programa en Java en el que modularices lo máximo la resolución de los diferentes problemas que se plantean:
+ * 
+ * El programa mostrará el siguiente menú:
+ * 1.- Mayúsculas
+ * 2.- Longitud de una cadena
+ * 3.- Número aleatorio
+ * 4.- Salir
+ * 
+ * Comportamiento del programa:
+ * El programa mostrará inicialmente este menú.
+ * Si el usuario selecciona la opción 1, se pedirá al usuario una cadena. El programa retornará el número de caracteres de dicha cadena
+ * Si el usuario selecciona la opción 2, se imprimirá la longitud de una cadena que el usuario introducirá por teclado.
+ * La opción 3, mostrará un número aleatorio entre 0.0 y 1.0.
+ * Si pulsa la opción 4, el programa finaliza.
+ * El menú deberá mostrarse siempre y cuando no se haya pulsado la opción 4.
+ * 
+ * No se permitirá utilizar System.out.println en la implementación de los métodos de las operaciones arriba indicadas.
+ * @param args
+ */
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		menu();
+	}
+	
+	public static void menu () {
+		String opcion1 = "1.- Mayúsculas";
+		String opcion2 = "2.- Longitud de una cadena";
+		String opcion3 = "3.- Número aleatorio";
+		String opcion4 = "4.- Salir";
+		
+		separador();
+		System.out.println(opcion1);
+		System.out.println(opcion2);
+		System.out.println(opcion3);
+		System.out.println(opcion4);
+		separador();
+		comprobandoOpcion();
+	}
+	
+	public static void separador () {
+		System.out.println("======================================");
+	}
+	
+	public static String solicitarString () {
+		Scanner sc = new Scanner(System.in);
+		String cadena;
+		cadena = sc.nextLine();
+		return cadena;
+	}
+	
+	public static void comprobandoOpcion () {
+		String opcion;
+		opcion = solicitarString();
+		
+		switch (opcion) {
+		case "1": mayusculas();
+			break;
+		}
+	}
+	public static String mayusculas () {
+		String cadena;
+		cadena = solicitarString();
+		
+		return cadena.toUpperCase();
+	}
+
+}

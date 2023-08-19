@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Rename compilation unit &apos;es.ifp.programacion.cadenas.ProgramaPrincilañ.java&apos; to &apos;ProgramaPrincipal.java&apos;&#x0D;&#x0A;- Original project: &apos;PROEjercicioPropuesto4_Cadenas&apos;&#x0D;&#x0A;- Original element: &apos;es.ifp.programacion.cadenas.ProgramaPrincilañ.java&apos;&#x0D;&#x0A;- Renamed element: &apos;es.ifp.programacion.cadenas.ProgramaPrincipal.java&apos;" description="Rename compilation unit &apos;ProgramaPrincilañ.java&apos;" flags="2" id="org.eclipse.jdt.ui.rename.compilationunit" input="/src&lt;es.ifp.programacion.cadenas{ProgramaPrincilañ.java" name="ProgramaPrincipal.java" references="false" stamp="1679043569770" version="1.0"/>
+</session>

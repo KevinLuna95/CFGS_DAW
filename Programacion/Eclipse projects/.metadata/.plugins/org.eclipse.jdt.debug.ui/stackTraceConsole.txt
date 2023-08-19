@@ -1,0 +1,47 @@
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+public class TurnoFarmacia {
+    private JFrame frameControl;
+    private JFrame frameTurno;
+    private JLabel label;
+    private int turno;
+
+    public TurnoFarmacia() {
+        turno = 0;
+        
+        // Ventana de control
+        frameControl = new JFrame("Control");
+        frameControl.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frameControl.setSize(300, 200);
+        frameControl.setLayout(new BorderLayout());
+
+        JButton boton = new JButton("Siguiente Turno");
+        boton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                turno++;
+                label.setText("Turno actual: " + turno);
+            }
+        });
+        frameControl.add(boton, BorderLayout.CENTER);
+        frameControl.setVisible(true);
+
+        // Ventana de turno
+        frameTurno = new JFrame("Turno");
+        frameTurno.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frameTurno.setSize(300, 200);
+        frameTurno.setLayout(new BorderLayout());
+
+        label = new JLabel("Turno actual: 0", SwingConstants.CENTER);
+        label.setFont(new Font("Arial", Font.BOLD, 24));
+        frameTurno.add(label, BorderLayout.CENTER);
+        frameTurno.setVisible(true);
+    }
+
+    public static void main(String[] args) {
+        new TurnoFarmacia();
+    }
+}

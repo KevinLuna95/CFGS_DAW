@@ -1,0 +1,124 @@
+package es.ifp.programacion.funciones;
+
+import java.util.Scanner;
+
+public class ProgramaPrincipal {
+/**
+ * Se realizará el siguiente ejercicio que corresponde a la UF2 de Programación.
+ * Crea un programa en Java en el que modularices lo máximo la resolución de los diferentes problemas que se plantean:
+ * 
+ * El programa mostrará el siguiente menú:
+ * 1.- Mayúsculas
+ * 2.- Longitud de una cadena
+ * 3.- Número aleatorio
+ * 4.- Salir
+ * 
+ * Comportamiento del programa:
+ * El programa mostrará inicialmente este menú.
+ * Si el usuario selecciona la opción 1, se pedirá al usuario una cadena. El programa retornará el número de caracteres de dicha cadena
+ * Si el usuario selecciona la opción 2, se imprimirá la longitud de una cadena que el usuario introducirá por teclado.
+ * La opción 3, mostrará un número aleatorio entre 0.0 y 1.0.
+ * Si pulsa la opción 4, el programa finaliza.
+ * El menú deberá mostrarse siempre y cuando no se haya pulsado la opción 4.
+ * 
+ * No se permitirá utilizar System.out.println en la implementación de los métodos de las operaciones arriba indicadas.
+ * @param args
+ */
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		while (menu() == true) {
+			menu();
+		}
+		
+	}
+	/**
+	 * Un procedimiento que muestra as 4 opciones del menú
+	 * @return Retorna un Booleano para permitir al bucle decidir si continua la ejecucion
+	 */
+	public static boolean menu () {
+
+		Boolean band;
+		String opcion1 = "1.- Mayúsculas";
+		String opcion2 = "2.- Longitud de una cadena";
+		String opcion3 = "3.- Número aleatorio";
+		String opcion4 = "4.- Salir";
+		
+		separador();
+		System.out.println(opcion1);
+		System.out.println(opcion2);
+		System.out.println(opcion3);
+		System.out.println(opcion4);
+		separador();
+		band = comprobandoOpcion();
+		return band;
+	}
+	/**
+	 * Un procedimiento que se utiliza como separador entre el menú y los procesos de transformación
+	 */
+	public static void separador () {
+		System.out.println("======================================");
+	}
+	/**
+	 * Una funcion que permite al usuario introducir una cadena como String
+	 * @return un String introducido por consola por el usuario
+	 */
+	public static String solicitarString () {
+		Scanner sc = new Scanner(System.in);
+		String cadena;
+		cadena = sc.nextLine();
+		return cadena;
+	}
+	
+	/**
+	 * Un procedimiento que comprueba la opción del menú seleccionada por el usuario y que ejecuta las funciones 
+	 * que transforman los datos introducidos según los requerimientos del menú
+	 */
+	public static boolean comprobandoOpcion () {
+		String opcion;
+		opcion = solicitarString();
+		
+		switch (opcion) {
+		case "1": System.out.println(mayusculas());
+		return true;
+		case "2": System.out.println(longitud());
+		return true;
+		case "3": System.out.println(numeroRandom());
+		return true;
+		case "4": return false;
+		default: System.out.println("El valor "+opcion+" no se encuentra entre las opciones, si desea salir pulse el 4");
+		return true;
+		}
+	}
+	
+	/**
+	 * La primera opción del manú. Su función es permitir a usuario introducir una cadena de texto que será transformada en mayúsculas
+	 * @return la cadena introducida por el usuario pero en MAYUSCULAS
+	 */
+	public static String mayusculas () {
+		String cadena;
+		System.out.println("Ingresa una cadena");
+		cadena = solicitarString();
+		
+		return cadena.toUpperCase();
+	}
+	/**
+	 * La segunda opción del menú. Su funcon es indicar el número de caracteres que contiene la cadena escrita por el usuario
+	 * @return el número de caracteres que tiene una cadena de texto
+	 */
+	public static int longitud() {
+		String cadena;
+		System.out.println("Ingresa una cadena");
+		cadena = solicitarString();
+		return cadena.length();
+		
+	}
+	/**
+	 * La tercera opción del menú. Su funcion es retornar un número aleatorio
+	 * @return Un numero aleatorio
+	 */
+	public static double numeroRandom () {
+		double numero = Math.random();
+		return numero;
+	}
+
+}

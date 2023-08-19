@@ -1,0 +1,19 @@
+/**
+ * 
+ */
+package es.ifp.programacion.operaciones
+/**
+ * @author kkevi
+ *
+ */
+public class ProgramaPrincipal {
+
+	/**
+	 * @param args
+	 */
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+
+	}
+
+}

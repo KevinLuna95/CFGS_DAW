@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Rename resource &apos;JavaUF3-archivos&apos; to &apos;Java-apuntes-en-codigo&apos;" description="Rename resource &apos;JavaUF3-archivos&apos;" flags="7" id="org.eclipse.ltk.core.refactoring.rename.resource" input="/JavaUF3-archivos" name="Java-apuntes-en-codigo" stamp="1678774712246" updateReferences="true"/>
+</session>

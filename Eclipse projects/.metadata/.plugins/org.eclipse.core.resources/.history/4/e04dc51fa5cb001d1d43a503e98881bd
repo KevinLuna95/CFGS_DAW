@@ -1,0 +1,310 @@
+package es.ifp.programacion.ejercicios.CRM;
+
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.Scanner;
+
+/**
+ * Un programa que permite gestionar ficheros mediante diferentes opciones:
+ * 
+ * A) Crear Fichero:
+ * Crea un fichero solicitando el nombre del archivo. Siempre se creara dentro de una carpeta llamada usuarios.
+ * 
+ * B) Introducir Informacion:
+ * La gestiion de la informacion esta destinada a insertar el nombre, los apellidos y el email en el fichero a escoger.
+ * 
+ * C) Leer Fichero:
+ * Permite la lectura de un archivo a elegir. Antes de la lectura aparece la siguiente cabecera: NOMBRE;APELLIDOS;EMAIL
+ * 
+ * D) Eliminar Fichero:
+ * Elimina un fichero indicando la ruta. Realizara una confirmacion antes de eliminar definitivamente.
+ * 
+ * E) Salir:
+ * Permite finalizar el programa
+ * 
+ * @author Kevin Luna Botey
+ * @version 1.0
+ * 
+ */
+
+public class ProgramaPrincipal {
+
+	public static void main(String[] args) {
+		// Programa principal encargado de la gestion de las diferentes opciones introducidas por el usuario en la funcion menu.
+		String opcion = "";
+		do {
+			opcion = gestionMenu();
+			
+			switch (opcion) {
+			case "A": crearFicheroRegistro();
+			break;
+			case "B": introducirInformacion();
+			break;
+			case "C": leerFichero();
+				break;
+			case "D": eliminarFichero();
+				break;
+			case "E":
+				break;
+			}
+		// Condicion de salida del programa "E"
+		} while (!opcion.equals("E"));
+		System.out.println("Fin del programa");
+	}
+	/**
+	 * Procedimiento para eliminar un fichero que comprueba la existencia del fichero y confirma con el usuario que archivo va a eliminar.
+	 */
+	public static void eliminarFichero() {
+		Scanner sc = new Scanner(System.in);
+		File fichero = null;
+		String respuesta = "";
+		Boolean eliminado = false;
+		
+		System.out.println("Introduce la ruta del fichero a eliminar");
+		fichero = new File(sc.nextLine());
+		
+		if (fichero.exists()) {
+			System.out.println("Quieres eliminar el archivo '"+fichero+"' definitivamente? S/N");
+			if (sc.nextLine().equals("S")) {
+				eliminado = fichero.delete();
+				if (eliminado) 
+					respuesta = " ha sido eliminado correctamente.";
+				else 
+					respuesta = " NO ha sido eliminado";
+				
+				System.out.println("El fichero "+fichero+respuesta);
+			} else
+				System.out.println("El fichero "+fichero+" NO ha silido eliminado");
+		} else
+			System.out.println("La ruta del fichero no es correcta o no existe.");
+	}
+	
+	/**
+	 * Permite realizar una lectura de ficheros con la estructura de Nombre;apellidos;email.
+	 */
+	public static void leerFichero() {
+		Scanner sc = new Scanner(System.in);
+		File fichero = null;
+		FileReader fr = null;
+		BufferedReader br= null;
+		String linea = "";
+		
+		System.out.println("Introduce la ruta del fichero a leer");
+		fichero = new File(sc.nextLine());
+		
+		if (fichero.exists()) {
+			try {
+				fr = new FileReader(fichero);
+				br = new BufferedReader(fr);
+				
+				linea = br.readLine();
+				System.out.println("NOMBRE;APELLIDOS;EMAIL");
+				while (linea != null) {
+					System.out.println(linea);
+					linea = br.readLine();
+				}
+				br.close();
+				fr.close();
+			} catch (FileNotFoundException e) {
+				e.printStackTrace();
+			} catch (IOException ioe) {
+				ioe.printStackTrace();
+			}
+		} else 
+			System.out.println("La ruta del fichero no es correcta o no existe.");
+	}
+	
+	/**
+	 * Permite anadir nombre, apellido e emails al usuario en un fichero a su eleccion.
+	 * Se realizarán las correspondientes vlidaciones.
+	 */
+	public static void introducirInformacion () {
+		Scanner sc = new Scanner(System.in);
+		File fichero = null;
+		FileWriter fw = null;
+		BufferedWriter bw = null;
+		boolean anadirInfo = true;
+		String nombre = "";
+		String apellidos = "";
+		String email = "";
+		
+		System.out.println("Introduce la ruta del fichero a escribir");
+		fichero = new File(sc.nextLine());
+		
+		if (fichero.exists()) {
+			System.out.println("Quieres sobreescribir el fichero? S/N");
+			if (sc.nextLine().equals("S")) {
+				System.out.println("Estas seguro? Escribe (SI) para sobreescribir");
+				if (sc.nextLine().equals("SI")) {
+					anadirInfo = false;
+				} else
+					anadirInfo = true;
+			} else
+				anadirInfo = true;
+		
+			System.out.println("Podras crear varios usuarios a la vez, para salir escribe como nombre EOF");
+			while (!nombre.equals("EOF")){
+				System.out.println("Escribe el NOMBRE que quieres anadir. EOF para salir");
+				nombre = sc.nextLine();
+					if (nombre.equals("EOF"))
+						break;
+					
+				System.out.println("Escribe los APELLIDOS que quieres anadir");
+				apellidos = sc.nextLine();
+				System.out.println("Escribe el EMAIL que quieres anadir");
+				email = sc.nextLine();
+				
+				try {
+					fw = new FileWriter(fichero,anadirInfo);
+					bw = new BufferedWriter(fw);
+					bw.write(nombre+";"+apellidos+";"+email+"\n");
+					bw.close();
+					fw.close();
+					System.out.println("La informacion introducida ha sido: "+nombre+";"+apellidos+";"+email);
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+		} else
+			System.out.println("La ruta del fichero no es correcta o no existe.");
+	}
+
+	public static void crearFicheroRegistro() {
+		File fichero = null;
+		File directorio = null;
+		File registro = null;
+		Scanner sc = new Scanner(System.in);
+		FileWriter fw = null;
+		BufferedWriter bw = null;
+		
+		directorio = new File("usuarios");
+		if (!directorio.exists()) {
+			if (directorio.mkdir()) {
+		
+				System.out.println("Indica el nombre del fichero a crear.");
+				System.out.println("**RECUERDA** el fichero se creara en la carpeta usuarios.");
+				fichero = new File(directorio+File.separator+sc.nextLine());
+				
+				if(fichero.exists()) {
+					System.out.println("El fichero "+fichero+" ya existe");
+					
+				} else {
+					try {
+						fichero.createNewFile();
+						registro = new File("config.txt");
+						
+						if(!registro.exists()) 
+							registro.createNewFile();
+						
+						fw = new FileWriter(registro);
+						bw = new BufferedWriter(fw);						
+						bw.write(fichero.getPath());
+						bw.newLine();
+						
+						bw.close();
+						fw.close();
+						
+					} catch (IOException e) {
+						e.printStackTrace();
+					}
+				}
+			}else
+				System.out.println("El directorio no se ha podido crear, intentalo de nuevo");
+			
+		} else {
+			System.out.println("Indica el nombre del fichero a crear.");
+			System.out.println("**RECUERDA** el fichero se creara en la carpeta usuarios.");
+			fichero = new File(directorio+File.separator+sc.nextLine());
+			
+			if(fichero.exists()) {
+				System.out.println("El fichero "+fichero+" ya existe");
+				
+			} else {
+				try {
+					fichero.createNewFile();
+					registro = new File("config.txt");
+					
+					if(!registro.exists()) 
+						registro.createNewFile();
+					
+					fw = new FileWriter(registro);
+					bw = new BufferedWriter(fw);						
+					bw.write(fichero.getPath());
+					
+					bw.close();
+					fw.close();
+					
+				} catch (IOException e) {
+					e.printStackTrace();
+					
+				}
+			}
+		}
+	}
+
+	/**
+	 * Una funcion que muestra al usuario el menu del programa y le solicita una opcion.
+	 * Ademas muestra el ultimo fichero creado si es que existe.
+	 * @return Retorna un String con la opcion seleccionada por el usuario
+	 */
+	public static String gestionMenu () {
+		Scanner sc = new Scanner(System.in);
+		String opcion = "";
+		File registro = null;
+		FileReader fr = null;
+		BufferedReader br = null;
+		File ultimoCreado = null;
+		
+		//Mostrando el menu
+		System.out.println("===============================");
+		System.out.println("      Gestion de ficheros      ");
+		System.out.println("===============================");
+		System.out.println("A) Crear fichero de texto.");
+		System.out.println("B) Introducir informacion en el fichero.");
+		System.out.println("C) Leer el fichero de texto.");
+		System.out.println("D) Eliminar el fichero de texto.");
+		System.out.println("E) Salir");
+		System.out.println("Escoge una opcion:");
+
+		//Si no existe se crea un fichero config que guarda el ultimo archivo creado para mostrarlo al usuario y facilitar el manejo de su fichero.
+		//En caso de no existir o de que el fichero haya sido borrado no se mostrara.
+		registro = new File("config.txt");
+		if (registro.exists()) {
+			try {
+				fr = new FileReader(registro);
+				br = new BufferedReader(fr);
+				
+				if (registro.length() > 0) {
+					ultimoCreado = new File(br.readLine());
+	
+					if(ultimoCreado.exists())
+						System.out.println("Fichero creado por ultima vez: "+ultimoCreado);
+				}
+				
+				br.close();
+				fr.close();
+								
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+
+		}else {
+			try {
+				registro.createNewFile();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+			
+		opcion = sc.nextLine();
+		if(!opcion.equals("A") && !opcion.equals("B") && !opcion.equals("C") && !opcion.equals("D") && !opcion.equals("E"))
+			System.out.println("El valor introducido es erroneo, pruebe con A,B,C,D o E");
+		return opcion;
+	}
+}
